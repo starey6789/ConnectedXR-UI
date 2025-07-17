@@ -1,0 +1,38 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/GUI/painting.uss?fileID=7433441132597879392&amp;guid=03a547a5e9a7c574c96526f58a8a6282&amp;type=3#painting" />
+    <ui:VisualElement name="BackButtons" style="flex-grow: 1; justify-content: flex-end; border-left-width: 25px;">
+        <ui:Button text="&#10;" name="Back" icon-image="project://database/Assets/GUI/Icons/arrow_circle_right.png?fileID=2800000&amp;guid=71dc172934c936b47ab29094c994e126&amp;type=3#arrow_circle_right" class="back" style="height: 100px; width: 100px; color: rgb(255, 255, 255); font-size: 30px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="MenuButtons" enabled="true" style="flex-grow: 1; align-items: flex-start; justify-content: space-between; align-self: auto; flex-direction: row; align-content: auto; opacity: 1; display: none; position: relative;">
+        <ui:VisualElement name="LeftGUI" class="button" style="flex-grow: 1; flex-direction: column; justify-content: flex-start; align-items: flex-start; margin-left: 25px; align-self: auto; align-content: auto;">
+            <ui:ScrollView name="Desc" class="unity-button" style="height: 330px; width: 460px; margin-top: 20px; margin-right: 4px; margin-bottom: 20px; margin-left: 4px; padding-top: 10px; padding-right: 12px; padding-bottom: 10px; padding-left: 12px; border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
+                <ui:Label text="Label" name="DescHeader" style="margin-bottom: 15px;" />
+                <ui:Label text="Label" name="DescText" style="font-size: 20px; -unity-text-align: middle-left; white-space: normal;" />
+            </ui:ScrollView>
+            <ui:ScrollView name="History" class="unity-button" style="height: 100px; width: 460px; margin-top: 20px; margin-right: 4px; margin-bottom: 20px; margin-left: 4px; padding-top: 10px; padding-right: 12px; padding-bottom: 10px; padding-left: 12px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
+                <ui:Label text="Label" name="HistoryHeader" style="margin-bottom: 15px;" />
+                <ui:Label text="Label" name="HistoryText" style="font-size: 20px; -unity-text-align: middle-left; white-space: normal;" />
+            </ui:ScrollView>
+        </ui:VisualElement>
+        <ui:VisualElement name="RightGUI" style="flex-grow: 1; align-items: flex-end; align-self: auto; align-content: auto; -unity-text-align: upper-left; justify-content: flex-start; margin-right: 25px;">
+            <ui:ScrollView name="Title" class="unity-button" style="height: 200px; width: 460px; margin-top: 20px; margin-right: 4px; margin-bottom: 20px; margin-left: 4px; padding-top: 10px; padding-right: 12px; padding-bottom: 10px; padding-left: 12px; border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
+                <ui:Label text="Label" name="TitleHeader" style="margin-bottom: 15px;" />
+                <ui:Label text="Label" name="TitleText" style="font-size: 20px; -unity-text-align: middle-left; white-space: normal;" />
+            </ui:ScrollView>
+            <ui:VisualElement name="Buttons" style="flex-grow: 1; flex-direction: row; width: auto; height: 100%; align-self: auto; align-items: flex-start;">
+                <ui:Button text="SYMBOLISM" name="Symbol" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 226px; height: 100px; font-size: 30px; color: rgb(255, 255, 255); letter-spacing: -10px; margin-top: 20px; margin-bottom: 20px;" />
+                <ui:Button text="RELATED WORKS&#10;" name="Related" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 226px; height: 100px; font-size: 30px; color: rgb(255, 255, 255); white-space: nowrap; -unity-text-align: middle-center; text-overflow: clip; letter-spacing: -10px; margin-top: 20px; margin-bottom: 20px;" />
+            </ui:VisualElement>
+            <ui:Button text="Button" name="Process" style="width: 460px; height: 100px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; margin-top: 20px; margin-bottom: 20px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="ArrowForward" style="flex-grow: 1; justify-content: space-around; align-content: flex-end; align-self: flex-end; display: none;">
+        <ui:Button text="&#10;" name="Forward" icon-image="project://database/Assets/GUI/Icons/arrow_circle_right.png?fileID=2800000&amp;guid=71dc172934c936b47ab29094c994e126&amp;type=3#arrow_circle_right" class="back" style="height: 100px; width: 100px; color: rgb(255, 255, 255); font-size: 30px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; align-self: auto; align-items: center; align-content: auto; justify-content: center; -unity-text-align: middle-center; white-space: nowrap;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="RightButtons" style="flex-grow: 1; align-self: flex-end; border-right-width: 25px; display: flex;">
+        <ui:ScrollView name="Right" class="unity-button" style="height: 430px; width: 460px; margin-top: 20px; margin-right: 4px; margin-bottom: 20px; margin-left: 4px; padding-top: 10px; padding-right: 12px; padding-bottom: 10px; padding-left: 12px; border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
+            <ui:Label text="Label" name="RightHeader" style="margin-bottom: 15px;" />
+            <ui:Label text="Label" name="RightText" style="font-size: 20px; -unity-text-align: middle-left; white-space: normal;" />
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>
