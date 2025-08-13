@@ -21,9 +21,9 @@ MonoBehaviour:
       m_GuidLow: 4941275721404671518
       m_GuidHigh: 6078942713774877354
     m_SerializedTextureGuid:
-      m_GuidLow: 16430241910255274575
-      m_GuidHigh: 3143750354108030859
-    m_Size: {x: 0.5, y: 0.5}
+      m_GuidLow: 11814093773926759648
+      m_GuidHigh: 11401818108617623787
+    m_Size: {x: 0.5, y: 0.75}
     m_SpecifySize: 1
-    m_Name: MonaLisa
-    m_Texture: {fileID: 2800000, guid: 5a804a4ff1f7e4038b1f1e6f4ad8a02b, type: 3}
+    m_Name: Mizi
+    m_Texture: {fileID: 2800000, guid: 920efce017b1a3f4eb08c50d29653b9e, type: 3}
