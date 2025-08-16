@@ -9,7 +9,7 @@ public class OpenBox : MonoBehaviour
     public UIDocument uiDocument;
 
     // These are the text files to populate the boxes
-    public string fileDesc, fileHistory, fileTitle, fileSymbolism, fileWorks, fileTechniques;
+    [SerializeField] string fileDesc, fileHistory, fileTitle, fileSymbolism, fileWorks, fileTechniques;
 
     // These are the UI elements
     // Pages
@@ -25,11 +25,11 @@ public class OpenBox : MonoBehaviour
     // Counter to see what page we're on
     private int counter;
     // String to see status of menu
-    private String status;
+    private static String status;
     // Metrics for time collection
-    private float startTime, endTime, totalTime;
-    private float menuStartTime, menuEndTime, menuTotalTime;
-    private bool descToggle = true; // boolean variable for status of home menu having description or history expanded
+    private static float startTime, endTime, totalTime;
+    private static float menuStartTime, menuEndTime, menuTotalTime;
+    private static bool descToggle = true; // boolean variable for status of home menu having description or history expanded
 
     void Start()
     {
@@ -102,6 +102,7 @@ public class OpenBox : MonoBehaviour
         MenuMetrics.IncrementClick("Description");
         //toggle status
         TimeLog("enter module menus");
+
         descToggle = true;
 
         descriptionContainer.style.height = 330;
@@ -133,7 +134,6 @@ public class OpenBox : MonoBehaviour
     // First Page of the UI
     void EnterView()
     {
-        Debug.Log("hi");
         menu.style.display = DisplayStyle.Flex;
         backMenu.style.display = DisplayStyle.Flex;
         rightMenu.style.display = DisplayStyle.None;
@@ -175,6 +175,29 @@ public class OpenBox : MonoBehaviour
 
             TimeLog("exit home");
         }
+    }
+
+    // copy of SymbolView for testing
+    void SymbolViewCopy(String hi)
+    {
+        //increment metrics click
+        MenuMetrics.IncrementClick("Symbolism");
+        //increment counter (EX: page 2) and sets status
+        counter++;
+        TimeLog("enter module menus");
+        status = "Symbolism";
+        startTime = Time.time;
+
+        Debug.Log("symbol");
+
+        //populate text field with Symbol text contents
+        rightHeader.text = "Symbolism";
+        rightText.text = LoadTextFromFile(fileSymbolism);
+
+            menu.style.display = DisplayStyle.None;
+            backMenu.style.display = DisplayStyle.Flex;
+            rightMenu.style.display = DisplayStyle.Flex;
+            startMenu.style.display = DisplayStyle.None;
     }
 
     void SymbolView()
@@ -240,8 +263,21 @@ public class OpenBox : MonoBehaviour
             startMenu.style.display = DisplayStyle.None;
     }
 
-    // load text given from a file
+    // method for ImageStatusTracker to call regarding active state of menu 
+    public static void ActiveStateLog(bool activeState)
+    {
+        if (activeState) // prefab is active, called in ImageStatusTracker
+        {
+            menuStartTime = Time.time;
+            startTime = menuStartTime;
+        }
+        else
+        {
+            TimeLog("hide");
+        }
+    }
 
+    // load text given from a fil
     public string LoadTextFromFile(string fileName)
     {
         TextAsset textAsset = Resources.Load<TextAsset>(fileName);
@@ -257,7 +293,7 @@ public class OpenBox : MonoBehaviour
 
     //populate UI so it doesn't have null text
 
-    private void TimeLog(String page)
+    private static void TimeLog(String page)
     {
         switch (page)
         {
@@ -302,33 +338,15 @@ public class OpenBox : MonoBehaviour
                 totalTime = 0;
                 break;
 
+            case "hide":
+                menuEndTime = Time.time;
+                totalTime = menuEndTime - startTime;
+                menuTotalTime = menuEndTime - menuStartTime;
+
+                MenuMetrics.LogMetrics(status, startTime, endTime, totalTime);
+                MenuMetrics.LogMetrics("Home", menuStartTime, menuEndTime, menuTotalTime);
+                break;
         }
-
-        // if (homeExit!)
-        // {
-        //     endTime = Time.time;
-        //     totalTime = endTime - startTime;
-        //     MenuMetrics.LogMetrics(page, startTime, endTime, totalTime);
-        //     totalTime = 0;
-        //     status = "Home";
-        // }
-        // else
-        // {
-        //     menuEndTime = Time.time;
-        //     endTime = menuEndTime;
-        //     totalTime = endTime - startTime;
-        //     menuTotalTime = menuEndTime - menuStartTime;
-
-        //     MenuMetrics.LogMetrics(page, menuStartTime, menuEndTime, menuTotalTime);
-        //     if (descToggle) // is on description
-        //     {
-        //         MenuMetrics.LogMetrics("Description", startTime, endTime, totalTime);
-        //     }
-        //     else
-        //     {
-        //         MenuMetrics.LogMetrics("History", startTime, endTime, totalTime);
-        //     }
-        // }
     }
     void populate()
     {

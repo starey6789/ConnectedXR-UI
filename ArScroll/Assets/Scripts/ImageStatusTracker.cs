@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
-public class ImageTimeTracker : MonoBehaviour
+public class ImageStatusTracker : MonoBehaviour
 {
     [SerializeField] ARTrackedImageManager m_TrackedImageManager;
     // [SerializeField] GameObject canvasPrefab;
@@ -21,9 +21,6 @@ public class ImageTimeTracker : MonoBehaviour
             // Handle added event
             startTime = Time.time;
             totalTime = 0;
-            // GameObject canvasInstance = Instantiate(canvasPrefab, newImage.transform);
-            // canvasInstance.transform.localPosition = Vector3.zero; 
-            // canvasInstance.transform.localScale = Vector3.one;
         }
 
         foreach (var updatedImage in eventArgs.updated)
@@ -31,22 +28,25 @@ public class ImageTimeTracker : MonoBehaviour
             // Handle updated event
             if (updatedImage.trackingState == TrackingState.Tracking) //image is in view
             {
-                ShowContent(updatedImage.gameObject, true);
+                // updatedImage.gameObject.SetActive(true);
+                // ShowContent(updatedImage.gameObject, true);
                 if (onRepeat)
                 {
                     startTime = Time.time;
                     onRepeat = false;
                 }
             }
-            else
+            else //image is not in view
             {
                 String trackedName = updatedImage.referenceImage.name; //method to get the name
 
-                ShowContent(updatedImage.gameObject, false);
+                // ShowContent(updatedImage.gameObject, false);
                 endTime = Time.time;
                 totalTime = endTime - startTime;
                 MenuMetrics.LogMetrics(trackedName, startTime, endTime, totalTime);
                 totalTime = 0;
+
+                // updatedImage.gameObject.SetActive(false);
 
                 // print(updatedImage.referenceImage.name + ": " + totalTime);
 
