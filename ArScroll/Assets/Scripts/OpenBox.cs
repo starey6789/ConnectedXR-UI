@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -13,7 +14,7 @@ public class OpenBox : MonoBehaviour
 
     // These are the UI elements
     // Pages
-    private VisualElement menu, startMenu, backMenu, rightMenu;
+    private VisualElement menu, startMenu, backMenu, rightMenu, circle;
 
     // Containers
     private Button upButton, backButton, symbolButton, relatedButton, processButton;
@@ -41,6 +42,8 @@ public class OpenBox : MonoBehaviour
         backMenu.style.display = DisplayStyle.None;
         rightMenu.style.display = DisplayStyle.None;
         startMenu.style.display = DisplayStyle.Flex;
+        StartCoroutine(load());
+
 
         //populate contents so its not left with placeholder text
         populate();
@@ -57,11 +60,12 @@ public class OpenBox : MonoBehaviour
         var root = uiDocument.rootVisualElement;
 
         menu = root.Q<VisualElement>("MenuButtons");
-        startMenu = root.Q<VisualElement>("ArrowForward");
+        startMenu = root.Q<VisualElement>("Loading");
+        circle = root.Q<VisualElement>("Circle");
         backMenu = root.Q<VisualElement>("BackButtons");
         rightMenu = root.Q<VisualElement>("RightButtons");
 
-        upButton = root.Q<Button>("Forward");
+        //upButton = root.Q<Button>("Forward");
         backButton = root.Q<Button>("Back");
         descriptionContainer = root.Q<ScrollView>("Desc");
         historyContainer = root.Q<ScrollView>("History");
@@ -85,7 +89,7 @@ public class OpenBox : MonoBehaviour
         historyContainer.RegisterCallback<ClickEvent>(evt => ExpandHistory());
 
         //If Forward button is pressed, we can enter the menu
-        upButton.clicked += EnterView;
+        //upButton.clicked += EnterView;
         // If Back button is pressed, we go back to having no menu
         backButton.clicked += ResetView;
         // If One of the buttons on the Right UI is pressed
@@ -121,7 +125,7 @@ public class OpenBox : MonoBehaviour
         //toggle status
         TimeLog("enter module menus");
         descToggle = false;
-        
+
 
         descriptionContainer.style.height = 100;
         historyContainer.style.height = 330;
@@ -144,7 +148,7 @@ public class OpenBox : MonoBehaviour
         status = "Home";
     }
 
-        //Reset to all the way back
+    //Reset to all the way back
     void ResetView()
     {
         if (counter >= 2)
@@ -167,11 +171,13 @@ public class OpenBox : MonoBehaviour
         else
         {
             Debug.Log("toggle off");
-            menu.style.display = DisplayStyle.None;
-            backMenu.style.display = DisplayStyle.None;
-            rightMenu.style.display = DisplayStyle.None;
-            startMenu.style.display = DisplayStyle.Flex;
-            counter--;
+            //menu.style.display = DisplayStyle.None;
+            //backMenu.style.display = DisplayStyle.None;
+            //rightMenu.style.display = DisplayStyle.None;
+            //startMenu.style.display = DisplayStyle.Flex;
+            //counter--;
+            counter = 0;
+            EnterView();
 
             TimeLog("exit home");
         }
@@ -194,10 +200,10 @@ public class OpenBox : MonoBehaviour
         rightHeader.text = "Symbolism";
         rightText.text = LoadTextFromFile(fileSymbolism);
 
-            menu.style.display = DisplayStyle.None;
-            backMenu.style.display = DisplayStyle.Flex;
-            rightMenu.style.display = DisplayStyle.Flex;
-            startMenu.style.display = DisplayStyle.None;
+        menu.style.display = DisplayStyle.None;
+        backMenu.style.display = DisplayStyle.Flex;
+        rightMenu.style.display = DisplayStyle.Flex;
+        startMenu.style.display = DisplayStyle.None;
     }
 
     void SymbolView()
@@ -216,10 +222,10 @@ public class OpenBox : MonoBehaviour
         rightHeader.text = "Symbolism";
         rightText.text = LoadTextFromFile(fileSymbolism);
 
-            menu.style.display = DisplayStyle.None;
-            backMenu.style.display = DisplayStyle.Flex;
-            rightMenu.style.display = DisplayStyle.Flex;
-            startMenu.style.display = DisplayStyle.None;
+        menu.style.display = DisplayStyle.None;
+        backMenu.style.display = DisplayStyle.Flex;
+        rightMenu.style.display = DisplayStyle.Flex;
+        startMenu.style.display = DisplayStyle.None;
     }
 
     void RelatedView()
@@ -243,10 +249,10 @@ public class OpenBox : MonoBehaviour
     }
 
     void ProcessView()
-    {   
+    {
         //increment metrics click
         MenuMetrics.IncrementClick("Process");
-        
+
         //increment counter (EX: page 2) and sets status
         counter++;
         TimeLog("enter module menus");
@@ -257,10 +263,10 @@ public class OpenBox : MonoBehaviour
         rightHeader.text = "Process";
         rightText.text = LoadTextFromFile(fileTechniques);
 
-            menu.style.display = DisplayStyle.None;
-            backMenu.style.display = DisplayStyle.Flex;
-            rightMenu.style.display = DisplayStyle.Flex;
-            startMenu.style.display = DisplayStyle.None;
+        menu.style.display = DisplayStyle.None;
+        backMenu.style.display = DisplayStyle.Flex;
+        rightMenu.style.display = DisplayStyle.Flex;
+        startMenu.style.display = DisplayStyle.None;
     }
 
     // method for ImageStatusTracker to call regarding active state of menu 
@@ -359,5 +365,25 @@ public class OpenBox : MonoBehaviour
         titleHeader.text = "Title";
         titleText.text = LoadTextFromFile(fileTitle);
     }
+
+    IEnumerator load()
+    {
+        float t = 0f;
+        float angle = 0f;
+        float duration = 5000f; //Loading duration
+
+        while (t < duration) //replace condition with AI chat call status
+        {
+            t += 1; //current loading duration counter
+            angle += 0.5f;
+            circle.style.rotate = new Rotate(angle);
+            Debug.Log(angle);
+            yield return null;
+        }
+
+        Debug.Log("Done loading");
+        EnterView();
+    }
+
 }
 
