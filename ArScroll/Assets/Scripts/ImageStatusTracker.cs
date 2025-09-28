@@ -7,7 +7,7 @@ using UnityEngine.XR.ARSubsystems;
 public class ImageStatusTracker : MonoBehaviour
 {
     [SerializeField] ARTrackedImageManager m_TrackedImageManager;
-    // [SerializeField] GameObject canvasPrefab;
+    [SerializeField] SocketConnection socketClient;
 
     private float startTime, endTime, totalTime;
     private bool onRepeat = false;
@@ -19,6 +19,9 @@ public class ImageStatusTracker : MonoBehaviour
         foreach (var newImage in eventArgs.added)
         {
             // Handle added event
+            socketClient.SendImageData(newImage.referenceImage.name);
+            
+            
             startTime = Time.time;
             totalTime = 0;
         }
@@ -28,8 +31,6 @@ public class ImageStatusTracker : MonoBehaviour
             // Handle updated event
             if (updatedImage.trackingState == TrackingState.Tracking) //image is in view
             {
-                // updatedImage.gameObject.SetActive(true);
-                // ShowContent(updatedImage.gameObject, true);
                 if (onRepeat)
                 {
                     startTime = Time.time;

@@ -377,7 +377,7 @@ public class OpenBox : MonoBehaviour
             t += 1; //current loading duration counter
             angle += 0.5f;
             circle.style.rotate = new Rotate(angle);
-            Debug.Log(angle);
+            // Debug.Log(angle);
             yield return null;
         }
 
