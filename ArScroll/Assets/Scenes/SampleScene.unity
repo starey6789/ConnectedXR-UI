@@ -119,6 +119,65 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &91136222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 91136224}
+  - component: {fileID: 91136223}
+  - component: {fileID: 91136225}
+  m_Layer: 0
+  m_Name: Socket Connector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &91136223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91136222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7267f5f940982c4a83798e6ab6bd8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SocketClient
+  serverIP: 127.0.0.1
+  serverPort: 65432
+--- !u!4 &91136224
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91136222}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &91136225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91136222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6796b381714ebc24fb22c55007549beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PythonRunner
 --- !u!1 &400200645
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,6 +419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ImageTimeTracker
   m_TrackedImageManager: {fileID: 1006674010}
+  socketClient: {fileID: 91136223}
 --- !u!1 &1785227230
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,3 +741,4 @@ SceneRoots:
   - {fileID: 695178735}
   - {fileID: 1006674015}
   - {fileID: 400200648}
+  - {fileID: 91136224}

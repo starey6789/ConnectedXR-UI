@@ -2,18 +2,22 @@ using UnityEngine;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Collections;
+using UnityEditor.Scripting.Python;
 
 public class SocketConnection : MonoBehaviour
 {
     private TcpClient client;
     private NetworkStream stream;
     private Thread receiveThread;
+    private Coroutine currentCoroutine;
 
     public string serverIP = "127.0.0.1";
     public int serverPort = 65432;
 
     public void Start()
     {
+        // PythonRunner.RunFile($"{Application.dataPath}/Scripts/DescPrint.py");
         ConnectToPythonServer();
     }
 
@@ -35,7 +39,7 @@ public class SocketConnection : MonoBehaviour
             receiveThread.IsBackground = true;
             receiveThread.Start();
 
-            SendMessageToPython("Hello from Unity!");
+            // SendMessageToPython("Hello from Unity!");
         }
         catch (SocketException e)
         {
