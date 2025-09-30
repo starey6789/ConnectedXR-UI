@@ -7,11 +7,14 @@ public class PythonRunner : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        pythonProcess = Process.Start("python", $"{Application.dataPath}/Scripts/DescPrint.py");
+        pythonProcess = Process.Start("python", @"Assets\Scripts\DescPrint.py");
         UnityEngine.Debug.Log("Python script started.");
     }
 
     // Update is called once per frame
+    void Update()
+    {
+    }
 
     void OnApplicationQuit()
     {
