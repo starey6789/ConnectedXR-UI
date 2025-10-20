@@ -3,6 +3,9 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Collections;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 public class SocketConnection : MonoBehaviour
 {
@@ -11,8 +14,11 @@ public class SocketConnection : MonoBehaviour
     private Thread receiveThread;
     private Coroutine currentCoroutine;
 
-    private string serverIP = "insert your own ip address here";
+    private string serverIP = "127.0.0.1"; //replace server device ip for mobile app testing 
     private int serverPort = 65432;
+
+    private string[] sectionList = { "description", "process", "symbolism", "history", "related_works" };
+    private int sectionIndex = 0;
 
     public void Start()
     {
@@ -59,7 +65,8 @@ public class SocketConnection : MonoBehaviour
 
     void ReceiveData()
     {
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[2000];
+        bool generation = false;
         while (client.Connected)
         {
             try
@@ -67,12 +74,28 @@ public class SocketConnection : MonoBehaviour
                 int bytesRead = stream.Read(buffer, 0, buffer.Length);
                 if (bytesRead > 0)
                 {
+                    
                     string receivedMessage = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                    Debug.Log("Received from Python: " + receivedMessage); //look into this and what it prints from the python server
-                    // could potentially use this for the trigger to stop loading 
-                    if(receivedMessage == "Wrote to file")
+                    Debug.Log("Received from Python: " + receivedMessage);
+
+                    if (generation)
                     {
-                        OpenBox.loadDone();
+                        //repeats till "generation done" is passed in
+                        string imageName = GlobalInfo.names[GlobalInfo.names.Count - 1];
+                        string path = "Assets\\Resources\\GeneratedTexts\\" + imageName + "_" + sectionList[sectionIndex] + ".txt";
+                        File.AppendAllText(path, receivedMessage);
+                        sectionIndex++;
+                        
+                        if(sectionIndex > 4)
+                        {
+                            generation = false;
+                            sectionIndex = 0;
+                            OpenBox.loadDone();
+                        }
+                    }
+                    if (receivedMessage == "Generating text")
+                    {
+                        generation = true;
                     }
                 }
             }

@@ -4,16 +4,17 @@ from google.genai import types
 import requests
 import socket
 import time
+import json
 
 HOST = '0.0.0.0'  # Standard loopback interface address (localhost)
 PORT = 65432        # Port to listen on (non-privileged ports are > 1023)
 
 prompt_list = [
     "provide a description for this and be concise, keep it around 100 words, do not include an introduction or conclusion",
-    "provide just the process of drawing this piece, do not include an introduction or conclusion",
+    "provide just the process of drawing this piece, keep it under 2000 characters and do not include an introduction or conclusion",
     "describe the symbolism in this and be concise, keep it around 100 words, do not include an introduction or conclusion",
-    "describe its history, if it doesn't have any just say 'No history regarding this piece.', be concise, keep it around 100 words, do not include an introduction or conclusion",
-    "list related works with respective artists, do not include an introduction or conclusion"
+    "describe this art piece's history, if it doesn't have any just say 'No history regarding this piece.', be concise, keep it around 100 words, do not include an introduction or conclusion",
+    "list related artworks with respective artists, if it doesn't have any just say 'No related works', do not include an introduction or conclusion or any text formatting"
 ]
 
 section_list = [
@@ -39,18 +40,24 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             
             name = data.decode('utf-8')
             image_path = r"Assets\ReferencesLibrary\Images\\" + name + ".png"
+
             with open(image_path, 'rb') as f: image_bytes = f.read()
             client = genai.Client()
+            conn.sendall(b"Generating text")
+            temp_list = []
             for i in range(len(section_list)):
+                print(i)
                 response = client.models.generate_content(
                     model='gemini-2.5-flash',
                     contents=[types.Part.from_bytes(data=image_bytes, mime_type='image/jpeg',),
                     prompt_list[i]
                     ]
                 )
-                with open(r"Assets\Resources\\" + name + "_" + section_list[i] + ".txt", "w", encoding="utf-8") as text_file:
-                    print(response.text, file=text_file)
-            conn.sendall(b"Wrote to file")
+                conn.sendall(response.text.encode('utf-8'))
+                # with open(r"Assets\Resources\GeneratedTexts\\" + name + "_" + section_list[i] + ".txt", "w", encoding="utf-8") as text_file:
+                #     print(response.text, file=text_file)
+            # json_array = json.dumps(temp_list) 
+            conn.sendall(b"Generation done") 
 
 # description prompt: provide a description for this and be concise, keep it around 100 words, do not include an introduction or conclusion
 # process prompt: provide just the process of drawing this piece
