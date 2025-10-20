@@ -75,3 +75,4 @@ crashlytics-build.properties
 # Environment files
 .env
 my_env.meta
+sensitive info.txt

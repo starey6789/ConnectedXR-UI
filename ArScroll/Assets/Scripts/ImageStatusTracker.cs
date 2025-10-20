@@ -19,7 +19,16 @@ public class ImageStatusTracker : MonoBehaviour
         foreach (var newImage in eventArgs.added)
         {
             // Handle added event
-            socketClient.SendImageData(newImage.referenceImage.name);
+            var imageName = newImage.referenceImage.name;
+            if (GlobalInfo.names.FindIndex(s => s == imageName) == -1)
+            {
+                socketClient.SendImageData(imageName);
+                GlobalInfo.names.Add(imageName);
+            }
+            else
+            {
+                OpenBox.loadDone();
+            }
             
             
             startTime = Time.time;

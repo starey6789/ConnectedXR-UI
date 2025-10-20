@@ -3,7 +3,6 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Collections;
-using UnityEditor.Scripting.Python;
 
 public class SocketConnection : MonoBehaviour
 {
@@ -12,8 +11,8 @@ public class SocketConnection : MonoBehaviour
     private Thread receiveThread;
     private Coroutine currentCoroutine;
 
-    public string serverIP = "127.0.0.1";
-    public int serverPort = 65432;
+    private string serverIP = "insert your own ip address here";
+    private int serverPort = 65432;
 
     public void Start()
     {
@@ -28,11 +27,12 @@ public class SocketConnection : MonoBehaviour
 
     public void ConnectToPythonServer()
     {
+        print("Attempting connection to server: " + serverIP + " port:" + serverPort);
         try
         {
             client = new TcpClient(serverIP, serverPort);
             stream = client.GetStream();
-            Debug.Log("Connected to Python server.");
+            print("Connected to Python server.");
 
             // Start a new thread for receiving data
             receiveThread = new Thread(ReceiveData);
@@ -68,7 +68,12 @@ public class SocketConnection : MonoBehaviour
                 if (bytesRead > 0)
                 {
                     string receivedMessage = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                    Debug.Log("Received from Python: " + receivedMessage);
+                    Debug.Log("Received from Python: " + receivedMessage); //look into this and what it prints from the python server
+                    // could potentially use this for the trigger to stop loading 
+                    if(receivedMessage == "Wrote to file")
+                    {
+                        OpenBox.loadDone();
+                    }
                 }
             }
             catch (System.Exception e)

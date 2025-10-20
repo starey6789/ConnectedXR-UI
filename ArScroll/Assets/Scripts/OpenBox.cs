@@ -11,6 +11,7 @@ public class OpenBox : MonoBehaviour
 
     // These are the text files to populate the boxes
     [SerializeField] string fileDesc, fileHistory, fileTitle, fileSymbolism, fileWorks, fileTechniques;
+    private String imageName;
 
     // These are the UI elements
     // Pages
@@ -30,7 +31,7 @@ public class OpenBox : MonoBehaviour
     // Metrics for time collection
     private static float startTime, endTime, totalTime;
     private static float menuStartTime, menuEndTime, menuTotalTime;
-    private static bool descToggle = true; // boolean variable for status of home menu having description or history expanded
+    private static bool descToggle = true, descriptionLoad = true; // boolean variable for status of home menu having description or history expanded
 
     void Start()
     {
@@ -96,6 +97,11 @@ public class OpenBox : MonoBehaviour
         symbolButton.clicked += SymbolView;
         relatedButton.clicked += RelatedView;
         processButton.clicked += ProcessView;
+    }
+
+    public void setName(String input)
+    {
+        imageName = input;
     }
 
     // EVENTS THAT OCCUR WHEN THINGS ARE PRESSED
@@ -356,6 +362,8 @@ public class OpenBox : MonoBehaviour
     }
     void populate()
     {
+        // file format: "Assets\Resources\\" + name + "_" + section_list[i], 
+        // section_list[i] is a list in DescPrint.py btw, that has the list of what texts were printed out
         descriptionHeader.text = "Description";
         descriptionText.text = LoadTextFromFile(fileDesc);
 
@@ -372,9 +380,10 @@ public class OpenBox : MonoBehaviour
         float angle = 0f;
         float duration = 5000f; //Loading duration
 
-        while (t < duration) //replace condition with AI chat call status
+        // while (descriptionLoad)
+        while(descriptionLoad)
         {
-            t += 1; //current loading duration counter
+            // t += 1; //current loading duration counter
             angle += 0.5f;
             circle.style.rotate = new Rotate(angle);
             // Debug.Log(angle);
@@ -382,7 +391,13 @@ public class OpenBox : MonoBehaviour
         }
 
         Debug.Log("Done loading");
+        descriptionLoad = true;
         EnterView();
+    }
+
+    public static void loadDone()
+    {
+        descriptionLoad = false;
     }
 
 }
