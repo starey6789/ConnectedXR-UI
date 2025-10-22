@@ -11,7 +11,7 @@ public class CleanUp : MonoBehaviour
     {
         Debug.Log("Clean up time...!");
 
-        string[] filePaths = Directory.GetFiles("Assets\\Resources\\GeneratedTexts");
+        string[] filePaths = Directory.GetFiles(Application.persistentDataPath + "/GeneratedTexts/");
         foreach (string file in filePaths)
         {
             Debug.Log(file + " to be deleted");

@@ -17,12 +17,14 @@ public class SocketConnection : MonoBehaviour
     private string serverIP = "127.0.0.1"; //replace server device ip for mobile app testing 
     private int serverPort = 65432;
 
+    private string dir;
     private string[] sectionList = { "description", "process", "symbolism", "history", "related_works" };
     private int sectionIndex = 0;
 
     public void Start()
     {
         // PythonRunner.RunFile($"{Application.dataPath}/Scripts/DescPrint.py");
+        dir = Application.persistentDataPath + "/GeneratedTexts/";
         ConnectToPythonServer();
     }
 
@@ -82,11 +84,13 @@ public class SocketConnection : MonoBehaviour
                     {
                         //repeats till "generation done" is passed in
                         string imageName = GlobalInfo.names[GlobalInfo.names.Count - 1];
-                        string path = "Assets\\Resources\\GeneratedTexts\\" + imageName + "_" + sectionList[sectionIndex] + ".txt";
+                        
+                        string path = dir + "/" + imageName + "_" + sectionList[sectionIndex] + ".txt";
                         File.AppendAllText(path, receivedMessage);
+
                         sectionIndex++;
                         
-                        if(sectionIndex > 4)
+                        if(sectionIndex > 4) // finished with iterating through sections list
                         {
                             generation = false;
                             sectionIndex = 0;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -10,7 +11,8 @@ public class OpenBox : MonoBehaviour
     public UIDocument uiDocument;
 
     // These are the text files to populate the boxes
-    [SerializeField] string fileDesc, fileHistory, fileTitle, fileSymbolism, fileWorks, fileTechniques;
+    [SerializeField] 
+    private string fileDesc, fileHistory, fileTitle, fileSymbolism, fileWorks, fileTechniques;
     private String imageName;
 
     // These are the UI elements
@@ -102,6 +104,12 @@ public class OpenBox : MonoBehaviour
     public void setName(String input)
     {
         imageName = input;
+        string dir = Application.persistentDataPath + "/GeneratedTexts/" + imageName;
+        fileDesc = dir + "_description.txt";
+        fileHistory = dir +  "_history.txt";
+        fileSymbolism = dir + "_symbolism.txt";
+        fileWorks = dir + "_related_works.txt";
+        fileTechniques = dir + "_process.txt";
     }
 
     // EVENTS THAT OCCUR WHEN THINGS ARE PRESSED
@@ -119,7 +127,9 @@ public class OpenBox : MonoBehaviour
         historyContainer.style.height = 100;
 
         descriptionHeader.text = "Description";
-        descriptionText.text = LoadTextFromFile(fileDesc);
+        descriptionText.text = File.ReadAllText(fileDesc);
+        string filePath = @"C:\Users\sammi\AppData\LocalLow\DefaultCompany\ArScroll\Mizi\history.txt";
+        // descriptionText.text = File.ReadAllText(filePath);
     }
 
     // if history box is pressed
@@ -137,7 +147,7 @@ public class OpenBox : MonoBehaviour
         historyContainer.style.height = 330;
 
         historyHeader.text = "History";
-        historyText.text = LoadTextFromFile(fileHistory);
+        historyText.text = File.ReadAllText(fileHistory);
     }
 
     //EVENTS THAT OCCUR FOR SELECTING WHICH UI IS ENABLED
@@ -204,7 +214,7 @@ public class OpenBox : MonoBehaviour
 
         //populate text field with Symbol text contents
         rightHeader.text = "Symbolism";
-        rightText.text = LoadTextFromFile(fileSymbolism);
+        rightText.text = File.ReadAllText(fileSymbolism);
 
         menu.style.display = DisplayStyle.None;
         backMenu.style.display = DisplayStyle.Flex;
@@ -226,7 +236,7 @@ public class OpenBox : MonoBehaviour
 
         //populate text field with Symbol text contents
         rightHeader.text = "Symbolism";
-        rightText.text = LoadTextFromFile(fileSymbolism);
+        rightText.text = File.ReadAllText(fileSymbolism);
 
         menu.style.display = DisplayStyle.None;
         backMenu.style.display = DisplayStyle.Flex;
@@ -246,7 +256,7 @@ public class OpenBox : MonoBehaviour
 
         //populate text field with Symbol text contents
         rightHeader.text = "Related Works";
-        rightText.text = LoadTextFromFile(fileWorks);
+        rightText.text = File.ReadAllText(fileWorks);
 
         menu.style.display = DisplayStyle.None;
         backMenu.style.display = DisplayStyle.Flex;
@@ -267,7 +277,7 @@ public class OpenBox : MonoBehaviour
 
         //populate text field with Symbol text contents
         rightHeader.text = "Process";
-        rightText.text = LoadTextFromFile(fileTechniques);
+        rightText.text = File.ReadAllText(fileTechniques);
 
         menu.style.display = DisplayStyle.None;
         backMenu.style.display = DisplayStyle.Flex;
@@ -362,16 +372,14 @@ public class OpenBox : MonoBehaviour
     }
     void populate()
     {
-        // file format: "Assets\Resources\\" + name + "_" + section_list[i], 
-        // section_list[i] is a list in DescPrint.py btw, that has the list of what texts were printed out
         descriptionHeader.text = "Description";
-        descriptionText.text = LoadTextFromFile(fileDesc);
+        descriptionText.text = File.ReadAllText(fileDesc);
 
         historyHeader.text = "History";
-        historyText.text = LoadTextFromFile(fileHistory);
+        historyText.text = File.ReadAllText(fileHistory);
 
         titleHeader.text = "Title";
-        titleText.text = LoadTextFromFile(fileTitle);
+        titleText.text = File.ReadAllText(fileTitle); //still need something for this, producing errors without file
     }
 
     IEnumerator load()

@@ -20,8 +20,15 @@ public class ImageStatusTracker : MonoBehaviour
         {
             // Handle added event
             var imageName = newImage.referenceImage.name;
+            // TrackedImageBridge bridge = newImage.GetComponent<TrackedImageBridge>(); //sends information to prefab
+            // bridge.sendName(imageName);
+            // OpenBox.loadDone();
+            
             if (GlobalInfo.names.FindIndex(s => s == imageName) == -1)
             {
+                TrackedImageBridge bridge = newImage.GetComponent<TrackedImageBridge>(); //sends information to prefab
+                bridge.sendName(imageName);
+                
                 socketClient.SendImageData(imageName);
                 GlobalInfo.names.Add(imageName);
             }
