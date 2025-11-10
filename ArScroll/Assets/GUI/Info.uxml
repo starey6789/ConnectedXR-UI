@@ -6,24 +6,24 @@
     <ui:VisualElement name="MenuButtons" enabled="true" style="flex-grow: 1; align-items: flex-start; justify-content: space-between; align-self: auto; flex-direction: row; align-content: auto; opacity: 1; display: none; position: relative;">
         <ui:VisualElement name="LeftGUI" class="button" style="flex-grow: 1; flex-direction: column; justify-content: flex-start; align-items: flex-start; margin-left: 25px; align-self: auto; align-content: auto;">
             <ui:ScrollView name="Desc" class="unity-button" style="height: 330px; width: 460px; margin-top: 20px; margin-right: 4px; margin-bottom: 20px; margin-left: 4px; padding-top: 10px; padding-right: 12px; padding-bottom: 10px; padding-left: 12px; border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
-                <ui:Label text="Label" name="DescHeader" style="margin-bottom: 15px;" />
+                <ui:Label text="Description" name="DescHeader" style="margin-bottom: 15px;" />
                 <ui:Label text="Label" name="DescText" style="font-size: 20px; -unity-text-align: middle-left; white-space: normal;" />
             </ui:ScrollView>
             <ui:ScrollView name="History" class="unity-button" style="height: 100px; width: 460px; margin-top: 20px; margin-right: 4px; margin-bottom: 20px; margin-left: 4px; padding-top: 10px; padding-right: 12px; padding-bottom: 10px; padding-left: 12px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
-                <ui:Label text="Label" name="HistoryHeader" style="margin-bottom: 15px;" />
+                <ui:Label text="History" name="HistoryHeader" style="margin-bottom: 15px;" />
                 <ui:Label text="Label" name="HistoryText" style="font-size: 20px; -unity-text-align: middle-left; white-space: normal;" />
             </ui:ScrollView>
         </ui:VisualElement>
         <ui:VisualElement name="RightGUI" style="flex-grow: 1; align-items: flex-end; align-self: auto; align-content: auto; -unity-text-align: upper-left; justify-content: flex-start; margin-right: 25px;">
             <ui:ScrollView name="Title" class="unity-button" style="height: 200px; width: 460px; margin-top: 20px; margin-right: 4px; margin-bottom: 20px; margin-left: 4px; padding-top: 10px; padding-right: 12px; padding-bottom: 10px; padding-left: 12px; border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
-                <ui:Label text="Label" name="TitleHeader" style="margin-bottom: 15px;" />
+                <ui:Label text="Title&#10;" name="TitleHeader" style="margin-bottom: 15px;" />
                 <ui:Label text="Label" name="TitleText" style="font-size: 20px; -unity-text-align: middle-left; white-space: normal;" />
             </ui:ScrollView>
             <ui:VisualElement name="Buttons" style="flex-grow: 1; flex-direction: row; width: auto; height: 100%; align-self: auto; align-items: flex-start;">
                 <ui:Button text="SYMBOLISM" name="Symbol" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 226px; height: 100px; font-size: 30px; color: rgb(255, 255, 255); letter-spacing: -10px; margin-top: 20px; margin-bottom: 20px;" />
                 <ui:Button text="RELATED WORKS&#10;" name="Related" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; width: 226px; height: 100px; font-size: 30px; color: rgb(255, 255, 255); white-space: nowrap; -unity-text-align: middle-center; text-overflow: clip; letter-spacing: -10px; margin-top: 20px; margin-bottom: 20px;" />
             </ui:VisualElement>
-            <ui:Button text="Button" name="Process" style="width: 460px; height: 100px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; margin-top: 20px; margin-bottom: 20px;" />
+            <ui:Button text="Process" name="Process" style="width: 460px; height: 100px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; margin-top: 20px; margin-bottom: 20px; font-size: 30px; color: rgb(255, 255, 255);" />
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="ArrowForward" style="flex-grow: 1; justify-content: space-around; align-content: flex-end; align-self: flex-end; display: none;">
@@ -36,6 +36,6 @@
         </ui:ScrollView>
     </ui:VisualElement>
     <ui:VisualElement name="Loading" style="flex-grow: 1; align-self: auto; justify-content: center; align-content: auto; align-items: center; rotate: 0; display: none;">
-        <ui:VisualElement name="Circle" style="flex-grow: 1; width: 400px; height: 400px; min-width: 400px; min-height: 400px; max-width: 400px; max-height: 400px; background-image: url(&quot;project://database/Assets/Animated%20Loading%20Icons/Spritesheet/Icons%20Spritesheet.png?fileID=21300026&amp;guid=0fd21678280ad9c47aa2d32baf438c5d&amp;type=3#circle_half_fading_thick&quot;); rotate: 0;" />
+        <ui:VisualElement name="Circle" style="flex-grow: 1; width: 400px; height: 400px; min-width: 400px; min-height: 400px; max-width: 400px; max-height: 400px; background-image: url(&quot;project://database/Assets/Image%20Materials/Animated%20Loading%20Icons/Spritesheet/Icons%20Spritesheet.png?fileID=21300026&amp;guid=0fd21678280ad9c47aa2d32baf438c5d&amp;type=3#circle_half_fading_thick&quot;); rotate: 0;" />
     </ui:VisualElement>
 </ui:UXML>
