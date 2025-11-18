@@ -14,7 +14,7 @@ public class SocketConnection : MonoBehaviour
     private Thread receiveThread;
     private Coroutine currentCoroutine;
 
-    private string serverIP = "127.0.0.1"; //replace server device ip for mobile app testing 
+    private string serverIP = "127.0.0.1"; //replace server device ip for mobile app testing, 
     private int serverPort = 65432;
 
     private string dir;
@@ -25,6 +25,12 @@ public class SocketConnection : MonoBehaviour
     {
         // PythonRunner.RunFile($"{Application.dataPath}/Scripts/DescPrint.py");
         dir = Application.persistentDataPath + "/GeneratedTexts/";
+
+        if (!Directory.Exists(dir))
+        {
+            Directory.CreateDirectory(dir);
+        }
+
         ConnectToPythonServer();
     }
 
@@ -78,7 +84,7 @@ public class SocketConnection : MonoBehaviour
                 {
                     
                     string receivedMessage = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                    Debug.Log("Received from Python: " + receivedMessage);
+                    // Debug.Log("Received from Python: " + receivedMessage);
 
                     if (generation)
                     {
@@ -86,6 +92,7 @@ public class SocketConnection : MonoBehaviour
                         string imageName = GlobalInfo.names[GlobalInfo.names.Count - 1];
                         
                         string path = dir + "/" + imageName + "_" + sectionList[sectionIndex] + ".txt";
+                        Debug.Log(path);
                         File.AppendAllText(path, receivedMessage);
 
                         sectionIndex++;

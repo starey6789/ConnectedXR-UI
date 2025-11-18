@@ -26,6 +26,7 @@ public class ImageStatusTracker : MonoBehaviour
             
             if (GlobalInfo.names.FindIndex(s => s == imageName) == -1)
             {
+                print("image processing..." + imageName);
                 TrackedImageBridge bridge = newImage.GetComponent<TrackedImageBridge>(); //sends information to prefab
                 bridge.sendName(imageName);
                 
@@ -34,6 +35,7 @@ public class ImageStatusTracker : MonoBehaviour
             }
             else
             {
+                print("image already proccessed:" + imageName);
                 OpenBox.loadDone();
             }
             

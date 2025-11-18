@@ -49,7 +49,7 @@ public class OpenBox : MonoBehaviour
 
 
         //populate contents so its not left with placeholder text
-        populate();
+        // populate();
     }
 
     void OnEnable()
@@ -379,7 +379,7 @@ public class OpenBox : MonoBehaviour
         historyText.text = File.ReadAllText(fileHistory);
 
         titleHeader.text = "Title";
-        titleText.text = File.ReadAllText(fileTitle); //still need something for this, producing errors without file
+        titleText.text = "title placeholder";//File.ReadAllText(fileTitle); //still need something for this, producing errors without file
     }
 
     IEnumerator load()
@@ -400,6 +400,7 @@ public class OpenBox : MonoBehaviour
 
         Debug.Log("Done loading");
         descriptionLoad = true;
+        populate();
         EnterView();
     }
 
