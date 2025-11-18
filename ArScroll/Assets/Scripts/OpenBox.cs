@@ -99,6 +99,9 @@ public class OpenBox : MonoBehaviour
         symbolButton.clicked += SymbolView;
         relatedButton.clicked += RelatedView;
         processButton.clicked += ProcessView;
+
+        //populate again
+        populate();
     }
 
     public void setName(String input)
@@ -402,6 +405,7 @@ public class OpenBox : MonoBehaviour
         descriptionLoad = true;
         populate();
         EnterView();
+        populate();
     }
 
     public static void loadDone()
