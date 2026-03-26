@@ -7,6 +7,11 @@ public class CleanUp : MonoBehaviour
     [SerializeField]
     private GameObject cleanButton;
 
+    public void Start()
+    {
+        Debug.Log(Path.Combine(Application.persistentDataPath, "logs"));
+    }
+
     public void cleanUp() //implement button for quitting or a reset cache system
     {
         Debug.Log("Clean up time...!");

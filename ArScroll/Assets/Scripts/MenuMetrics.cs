@@ -19,6 +19,11 @@ class MenuMetrics
         LogMetrics("MENU1", 24, (float)69.99, 5);
     } */
 
+    // void Start()
+    // {
+    //     Debug.Log(dir);
+    // }
+
     //logs the starting timestamp, ending timestamp, time spent
     //into a json file with the name of the menu
     //will increase the counter by 1
@@ -28,7 +33,7 @@ class MenuMetrics
         string FileName = name + ".json";
         string path = Path.Combine(dir, FileName);
 
-        // Debug.Log("pre-appending");
+        
 
         //initialize a new menu or 
         //a menu with existing data loaded in

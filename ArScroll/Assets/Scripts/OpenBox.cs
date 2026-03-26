@@ -24,7 +24,7 @@ public class OpenBox : MonoBehaviour
     private ScrollView descriptionContainer, historyContainer, titleContainer;
 
     // Text Headers
-    private Label descriptionHeader, historyHeader, titleHeader, rightHeader, descriptionText, historyText, titleText, rightText;
+    private Label descriptionHeader, historyHeader, titleHeader, rightHeader, descriptionText, historyText, rightText;
 
     // Counter to see what page we're on
     private int counter;
@@ -84,7 +84,7 @@ public class OpenBox : MonoBehaviour
 
         descriptionText = root.Q<Label>("DescText");
         historyText = root.Q<Label>("HistoryText");
-        titleText = root.Q<Label>("TitleText");
+      //  titleText = root.Q<Label>("TitleText");
         rightText = root.Q<Label>("RightText");
 
         // Add event listeners 
@@ -381,8 +381,8 @@ public class OpenBox : MonoBehaviour
         historyHeader.text = "History";
         historyText.text = File.ReadAllText(fileHistory);
 
-        titleHeader.text = "Title";
-        titleText.text = "title placeholder";//File.ReadAllText(fileTitle); //still need something for this, producing errors without file
+        titleHeader.text = imageName;
+        // titleText.text = "title placeholder";//File.ReadAllText(fileTitle); //still need something for this, producing errors without file
     }
 
     IEnumerator load()

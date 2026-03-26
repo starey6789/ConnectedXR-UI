@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.XR.ARFoundation;
@@ -20,24 +21,45 @@ public class ImageStatusTracker : MonoBehaviour
         {
             // Handle added event
             var imageName = newImage.referenceImage.name;
+            TrackedImageBridge bridge = newImage.GetComponent<TrackedImageBridge>(); //sends information to prefab
+            bridge.sendName(imageName);
+            OpenBox.loadDone();
+            
+            // uncomment once ui is fully fixed !!!!!!
+            // string dir = Application.persistentDataPath + "/GeneratedTexts/";
+            // string[] files = Directory.GetFiles(dir);
+            // Boolean inDir = false;
+            // for(int i = 0; i < files.Length; i++)
+            // {
+            //     string fileIndex = files[i];
+            //     if(fileIndex.Contains(imageName))
+            //     {
+            //         inDir = true;
+            //         break;
+            //     }
+            // }
+
+            // print("image processing..." + imageName);
             // TrackedImageBridge bridge = newImage.GetComponent<TrackedImageBridge>(); //sends information to prefab
             // bridge.sendName(imageName);
-            // OpenBox.loadDone();
             
-            if (GlobalInfo.names.FindIndex(s => s == imageName) == -1)
-            {
-                print("image processing..." + imageName);
-                TrackedImageBridge bridge = newImage.GetComponent<TrackedImageBridge>(); //sends information to prefab
-                bridge.sendName(imageName);
+            // socketClient.SendImageData(imageName);
+            // GlobalInfo.names.Add(imageName);
+
+            // if (GlobalInfo.names.FindIndex(s => s == imageName) == -1)
+            // {
+            //     print("image processing..." + imageName);
+            //     TrackedImageBridge bridge = newImage.GetComponent<TrackedImageBridge>(); //sends information to prefab
+            //     bridge.sendName(imageName);
                 
-                socketClient.SendImageData(imageName);
-                GlobalInfo.names.Add(imageName);
-            }
-            else
-            {
-                print("image already proccessed:" + imageName);
-                OpenBox.loadDone();
-            }
+            //     socketClient.SendImageData(imageName);
+            //     GlobalInfo.names.Add(imageName);
+            // }
+            // else
+            // {
+            //     print("image already proccessed:" + imageName);
+            //     OpenBox.loadDone();
+            // }
             
             
             startTime = Time.time;

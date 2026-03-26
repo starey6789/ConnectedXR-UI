@@ -37,3 +37,33 @@ MonoBehaviour:
     m_SpecifySize: 1
     m_Name: Mona Lisa
     m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4924339501156345369
+      m_GuidHigh: 2134806587600666242
+    m_SerializedTextureGuid:
+      m_GuidLow: 3847461022267725706
+      m_GuidHigh: 2056312306781225835
+    m_Size: {x: 1, y: 0.7916667}
+    m_SpecifySize: 1
+    m_Name: Starry Night
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5321126316013574738
+      m_GuidHigh: 670221091177206711
+    m_SerializedTextureGuid:
+      m_GuidLow: 5711969612634208470
+      m_GuidHigh: 3995432652031254763
+    m_Size: {x: 1, y: 1.2908334}
+    m_SpecifySize: 1
+    m_Name: The Swing
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4711715839425264456
+      m_GuidHigh: 2630849562081293961
+    m_SerializedTextureGuid:
+      m_GuidLow: 8837232470135469916
+      m_GuidHigh: 1832540639809479769
+    m_Size: {x: 1, y: 1.2393343}
+    m_SpecifySize: 1
+    m_Name: Woman with a parasol
+    m_Texture: {fileID: 0}

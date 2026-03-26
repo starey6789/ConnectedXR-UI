@@ -14,11 +14,11 @@ public class SocketConnection : MonoBehaviour
     private Thread receiveThread;
     private Coroutine currentCoroutine;
 
-    private string serverIP = "127.0.0.1"; //replace server device ip for mobile app testing, 
+    private string serverIP = "your ip"; 
     private int serverPort = 65432;
 
     private string dir;
-    private string[] sectionList = { "description", "process", "symbolism", "history", "related_works" };
+    private string[] sectionList = { "description", "symbolism", "process", "history", "related_works" };
     private int sectionIndex = 0;
 
     public void Start()
@@ -73,7 +73,7 @@ public class SocketConnection : MonoBehaviour
 
     void ReceiveData()
     {
-        byte[] buffer = new byte[2000];
+        byte[] buffer = new byte[2500];
         bool generation = false;
         while (client.Connected)
         {

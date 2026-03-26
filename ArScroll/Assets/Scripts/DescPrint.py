@@ -11,20 +11,20 @@ PORT = 65432        # Port to listen on (non-privileged ports are > 1023)
 
 prompt_list = [
     "provide a description for this and be concise, keep it around 100 words, do not include an introduction or conclusion",
-    "provide just the process of drawing this piece, keep it under 2000 characters and do not include an introduction or conclusion",
     "describe the symbolism in this and be concise, keep it around 100 words, do not include an introduction or conclusion",
+    "provide just the process of drawing this piece, keep it under 1500 characters and do not include an introduction or conclusion",
     "describe this art piece's history, if it doesn't have any just say 'No history regarding this piece.', be concise, keep it around 100 words, do not include an introduction or conclusion",
     "list related artworks with respective artists, if it doesn't have any just say 'No related works', do not include an introduction or conclusion or any text formatting"
 ]
 
 section_list = [
     "description",
-    "process",
     "symbolism",
+    "process",
     "history",
     "related_works"
 ]
-
+print("Server started!")
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
