@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.XR.ARFoundation;
@@ -7,7 +8,7 @@ using UnityEngine.XR.ARSubsystems;
 public class ImageStatusTracker : MonoBehaviour
 {
     [SerializeField] ARTrackedImageManager m_TrackedImageManager;
-    // [SerializeField] GameObject canvasPrefab;
+    [SerializeField] SocketConnection socketClient;
 
     private float startTime, endTime, totalTime;
     private bool onRepeat = false;
@@ -19,6 +20,48 @@ public class ImageStatusTracker : MonoBehaviour
         foreach (var newImage in eventArgs.added)
         {
             // Handle added event
+            var imageName = newImage.referenceImage.name;
+            TrackedImageBridge bridge = newImage.GetComponent<TrackedImageBridge>(); //sends information to prefab
+            bridge.sendName(imageName);
+            OpenBox.loadDone();
+            
+            // uncomment once ui is fully fixed !!!!!!
+            // string dir = Application.persistentDataPath + "/GeneratedTexts/";
+            // string[] files = Directory.GetFiles(dir);
+            // Boolean inDir = false;
+            // for(int i = 0; i < files.Length; i++)
+            // {
+            //     string fileIndex = files[i];
+            //     if(fileIndex.Contains(imageName))
+            //     {
+            //         inDir = true;
+            //         break;
+            //     }
+            // }
+
+            // print("image processing..." + imageName);
+            // TrackedImageBridge bridge = newImage.GetComponent<TrackedImageBridge>(); //sends information to prefab
+            // bridge.sendName(imageName);
+            
+            // socketClient.SendImageData(imageName);
+            // GlobalInfo.names.Add(imageName);
+
+            // if (GlobalInfo.names.FindIndex(s => s == imageName) == -1)
+            // {
+            //     print("image processing..." + imageName);
+            //     TrackedImageBridge bridge = newImage.GetComponent<TrackedImageBridge>(); //sends information to prefab
+            //     bridge.sendName(imageName);
+                
+            //     socketClient.SendImageData(imageName);
+            //     GlobalInfo.names.Add(imageName);
+            // }
+            // else
+            // {
+            //     print("image already proccessed:" + imageName);
+            //     OpenBox.loadDone();
+            // }
+            
+            
             startTime = Time.time;
             totalTime = 0;
         }
@@ -28,8 +71,6 @@ public class ImageStatusTracker : MonoBehaviour
             // Handle updated event
             if (updatedImage.trackingState == TrackingState.Tracking) //image is in view
             {
-                // updatedImage.gameObject.SetActive(true);
-                // ShowContent(updatedImage.gameObject, true);
                 if (onRepeat)
                 {
                     startTime = Time.time;

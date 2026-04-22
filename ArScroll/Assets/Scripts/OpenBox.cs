@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -9,18 +11,20 @@ public class OpenBox : MonoBehaviour
     public UIDocument uiDocument;
 
     // These are the text files to populate the boxes
-    [SerializeField] string fileDesc, fileHistory, fileTitle, fileSymbolism, fileWorks, fileTechniques;
+    [SerializeField] 
+    private string fileDesc, fileHistory, fileTitle, fileSymbolism, fileWorks, fileTechniques;
+    private String imageName;
 
     // These are the UI elements
     // Pages
-    private VisualElement menu, startMenu, backMenu, rightMenu;
+    private VisualElement menu, startMenu, backMenu, rightMenu, circle;
 
     // Containers
     private Button upButton, backButton, symbolButton, relatedButton, processButton;
     private ScrollView descriptionContainer, historyContainer, titleContainer;
 
     // Text Headers
-    private Label descriptionHeader, historyHeader, titleHeader, rightHeader, descriptionText, historyText, titleText, rightText;
+    private Label descriptionHeader, historyHeader, titleHeader, rightHeader, descriptionText, historyText, rightText;
 
     // Counter to see what page we're on
     private int counter;
@@ -29,7 +33,7 @@ public class OpenBox : MonoBehaviour
     // Metrics for time collection
     private static float startTime, endTime, totalTime;
     private static float menuStartTime, menuEndTime, menuTotalTime;
-    private static bool descToggle = true; // boolean variable for status of home menu having description or history expanded
+    private static bool descToggle = true, descriptionLoad = true; // boolean variable for status of home menu having description or history expanded
 
     void Start()
     {
@@ -41,9 +45,11 @@ public class OpenBox : MonoBehaviour
         backMenu.style.display = DisplayStyle.None;
         rightMenu.style.display = DisplayStyle.None;
         startMenu.style.display = DisplayStyle.Flex;
+        StartCoroutine(load());
+
 
         //populate contents so its not left with placeholder text
-        populate();
+        // populate();
     }
 
     void OnEnable()
@@ -57,11 +63,12 @@ public class OpenBox : MonoBehaviour
         var root = uiDocument.rootVisualElement;
 
         menu = root.Q<VisualElement>("MenuButtons");
-        startMenu = root.Q<VisualElement>("ArrowForward");
+        startMenu = root.Q<VisualElement>("Loading");
+        circle = root.Q<VisualElement>("Circle");
         backMenu = root.Q<VisualElement>("BackButtons");
         rightMenu = root.Q<VisualElement>("RightButtons");
 
-        upButton = root.Q<Button>("Forward");
+        //upButton = root.Q<Button>("Forward");
         backButton = root.Q<Button>("Back");
         descriptionContainer = root.Q<ScrollView>("Desc");
         historyContainer = root.Q<ScrollView>("History");
@@ -77,7 +84,7 @@ public class OpenBox : MonoBehaviour
 
         descriptionText = root.Q<Label>("DescText");
         historyText = root.Q<Label>("HistoryText");
-        titleText = root.Q<Label>("TitleText");
+      //  titleText = root.Q<Label>("TitleText");
         rightText = root.Q<Label>("RightText");
 
         // Add event listeners 
@@ -85,13 +92,27 @@ public class OpenBox : MonoBehaviour
         historyContainer.RegisterCallback<ClickEvent>(evt => ExpandHistory());
 
         //If Forward button is pressed, we can enter the menu
-        upButton.clicked += EnterView;
+        //upButton.clicked += EnterView;
         // If Back button is pressed, we go back to having no menu
         backButton.clicked += ResetView;
         // If One of the buttons on the Right UI is pressed
         symbolButton.clicked += SymbolView;
         relatedButton.clicked += RelatedView;
         processButton.clicked += ProcessView;
+
+        //populate again
+        populate();
+    }
+
+    public void setName(String input)
+    {
+        imageName = input;
+        string dir = Application.persistentDataPath + "/GeneratedTexts/" + imageName;
+        fileDesc = dir + "_description.txt";
+        fileHistory = dir +  "_history.txt";
+        fileSymbolism = dir + "_symbolism.txt";
+        fileWorks = dir + "_related_works.txt";
+        fileTechniques = dir + "_process.txt";
     }
 
     // EVENTS THAT OCCUR WHEN THINGS ARE PRESSED
@@ -109,7 +130,9 @@ public class OpenBox : MonoBehaviour
         historyContainer.style.height = 100;
 
         descriptionHeader.text = "Description";
-        descriptionText.text = LoadTextFromFile(fileDesc);
+        descriptionText.text = File.ReadAllText(fileDesc);
+        string filePath = @"C:\Users\sammi\AppData\LocalLow\DefaultCompany\ArScroll\Mizi\history.txt";
+        // descriptionText.text = File.ReadAllText(filePath);
     }
 
     // if history box is pressed
@@ -121,13 +144,13 @@ public class OpenBox : MonoBehaviour
         //toggle status
         TimeLog("enter module menus");
         descToggle = false;
-        
+
 
         descriptionContainer.style.height = 100;
         historyContainer.style.height = 330;
 
         historyHeader.text = "History";
-        historyText.text = LoadTextFromFile(fileHistory);
+        historyText.text = File.ReadAllText(fileHistory);
     }
 
     //EVENTS THAT OCCUR FOR SELECTING WHICH UI IS ENABLED
@@ -144,7 +167,7 @@ public class OpenBox : MonoBehaviour
         status = "Home";
     }
 
-        //Reset to all the way back
+    //Reset to all the way back
     void ResetView()
     {
         if (counter >= 2)
@@ -167,11 +190,13 @@ public class OpenBox : MonoBehaviour
         else
         {
             Debug.Log("toggle off");
-            menu.style.display = DisplayStyle.None;
-            backMenu.style.display = DisplayStyle.None;
-            rightMenu.style.display = DisplayStyle.None;
-            startMenu.style.display = DisplayStyle.Flex;
-            counter--;
+            //menu.style.display = DisplayStyle.None;
+            //backMenu.style.display = DisplayStyle.None;
+            //rightMenu.style.display = DisplayStyle.None;
+            //startMenu.style.display = DisplayStyle.Flex;
+            //counter--;
+            counter = 0;
+            EnterView();
 
             TimeLog("exit home");
         }
@@ -192,12 +217,12 @@ public class OpenBox : MonoBehaviour
 
         //populate text field with Symbol text contents
         rightHeader.text = "Symbolism";
-        rightText.text = LoadTextFromFile(fileSymbolism);
+        rightText.text = File.ReadAllText(fileSymbolism);
 
-            menu.style.display = DisplayStyle.None;
-            backMenu.style.display = DisplayStyle.Flex;
-            rightMenu.style.display = DisplayStyle.Flex;
-            startMenu.style.display = DisplayStyle.None;
+        menu.style.display = DisplayStyle.None;
+        backMenu.style.display = DisplayStyle.Flex;
+        rightMenu.style.display = DisplayStyle.Flex;
+        startMenu.style.display = DisplayStyle.None;
     }
 
     void SymbolView()
@@ -214,12 +239,12 @@ public class OpenBox : MonoBehaviour
 
         //populate text field with Symbol text contents
         rightHeader.text = "Symbolism";
-        rightText.text = LoadTextFromFile(fileSymbolism);
+        rightText.text = File.ReadAllText(fileSymbolism);
 
-            menu.style.display = DisplayStyle.None;
-            backMenu.style.display = DisplayStyle.Flex;
-            rightMenu.style.display = DisplayStyle.Flex;
-            startMenu.style.display = DisplayStyle.None;
+        menu.style.display = DisplayStyle.None;
+        backMenu.style.display = DisplayStyle.Flex;
+        rightMenu.style.display = DisplayStyle.Flex;
+        startMenu.style.display = DisplayStyle.None;
     }
 
     void RelatedView()
@@ -234,7 +259,7 @@ public class OpenBox : MonoBehaviour
 
         //populate text field with Symbol text contents
         rightHeader.text = "Related Works";
-        rightText.text = LoadTextFromFile(fileWorks);
+        rightText.text = File.ReadAllText(fileWorks);
 
         menu.style.display = DisplayStyle.None;
         backMenu.style.display = DisplayStyle.Flex;
@@ -243,10 +268,10 @@ public class OpenBox : MonoBehaviour
     }
 
     void ProcessView()
-    {   
+    {
         //increment metrics click
         MenuMetrics.IncrementClick("Process");
-        
+
         //increment counter (EX: page 2) and sets status
         counter++;
         TimeLog("enter module menus");
@@ -255,12 +280,12 @@ public class OpenBox : MonoBehaviour
 
         //populate text field with Symbol text contents
         rightHeader.text = "Process";
-        rightText.text = LoadTextFromFile(fileTechniques);
+        rightText.text = File.ReadAllText(fileTechniques);
 
-            menu.style.display = DisplayStyle.None;
-            backMenu.style.display = DisplayStyle.Flex;
-            rightMenu.style.display = DisplayStyle.Flex;
-            startMenu.style.display = DisplayStyle.None;
+        menu.style.display = DisplayStyle.None;
+        backMenu.style.display = DisplayStyle.Flex;
+        rightMenu.style.display = DisplayStyle.Flex;
+        startMenu.style.display = DisplayStyle.None;
     }
 
     // method for ImageStatusTracker to call regarding active state of menu 
@@ -351,13 +376,42 @@ public class OpenBox : MonoBehaviour
     void populate()
     {
         descriptionHeader.text = "Description";
-        descriptionText.text = LoadTextFromFile(fileDesc);
+        descriptionText.text = File.ReadAllText(fileDesc);
 
         historyHeader.text = "History";
-        historyText.text = LoadTextFromFile(fileHistory);
+        historyText.text = File.ReadAllText(fileHistory);
 
-        titleHeader.text = "Title";
-        titleText.text = LoadTextFromFile(fileTitle);
+        titleHeader.text = imageName;
+        // titleText.text = "title placeholder";//File.ReadAllText(fileTitle); //still need something for this, producing errors without file
     }
+
+    IEnumerator load()
+    {
+        float t = 0f;
+        float angle = 0f;
+        float duration = 5000f; //Loading duration
+
+        // while (descriptionLoad)
+        while(descriptionLoad)
+        {
+            // t += 1; //current loading duration counter
+            angle += 0.5f;
+            circle.style.rotate = new Rotate(angle);
+            // Debug.Log(angle);
+            yield return null;
+        }
+
+        Debug.Log("Done loading");
+        descriptionLoad = true;
+        populate();
+        EnterView();
+        populate();
+    }
+
+    public static void loadDone()
+    {
+        descriptionLoad = false;
+    }
+
 }
 
